@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+<header>
+    <h1>Fitness manager</h1>
+</header>
+<h2>New member</h2>
+<form action="/" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name">
+    <label for="phone">Phone:</label>
+    <input type="text" name="phone" id="phone">
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email">
+    <label for="active_membership">Membership:</label>
+    <input type="radio" name="active_membership" id="yes">
+    <label for="yes">Yes</label>
+    <input type="radio" name="active_membership" id="no">
+    <label for="no">No</label>
+    <input type="submit" value="Submit">
+</form>
+    
+{% endblock %}

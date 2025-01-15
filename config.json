@@ -1,0 +1,8 @@
+{
+    "db":{
+        "host": "localhost",
+        "user": "fitnessuser",
+        "password": "fitness",
+        "name": "fitnessdb"
+    }
+}
