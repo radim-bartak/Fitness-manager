@@ -11,11 +11,14 @@ class Member(db.Model):
     phone = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     active_membership = db.Column(db.Boolean, default=False)
-    registration_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    registration_date = db.Column(db.DateTime, default=datetime.utcnow)
 
     memberships = db.relationship('Membership', back_populates='member', cascade='all, delete-orphan')
     reservations = db.relationship('Reservation', back_populates='member', cascade='all, delete-orphan')
     payments = db.relationship('Payment', back_populates='member', cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return f"Member('{self.name}', '{self.email}')"
 
 class Membership(db.Model):
     __tablename__ = "membership"
@@ -76,7 +79,7 @@ class Payment(db.Model):
     member_id = db.Column(db.Integer, db.ForeignKey("member.id"), nullable=False)
     membership_id = db.Column(db.Integer, db.ForeignKey("membership.id"), nullable=True)
     total_price = db.Column(db.Float, nullable=False)
-    payment_date = db.Column(db.DateTime, default=datetime.utcnow,nullable=False)
+    payment_date = db.Column(db.DateTime, default=datetime.utcnow)
     payment_method = db.Column(db.Enum("Cash","Card","Online"), nullable=False)
 
     member = db.relationship('Member', back_populates='payments')
