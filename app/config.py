@@ -13,12 +13,12 @@ class Config:
 
     def load_config(self):
         if not os.path.exists(self.config_file):
-            raise ConfigError(f"Konfigurační soubor '{self.config_file}' nebyl nalezen.")
+            raise ConfigError(f"Config file '{self.config_file}' not found.")
         try:
             with open(self.config_file, "r") as file:
                 return json.load(file)
         except json.JSONDecodeError as e:
-            raise ConfigError(f"Chyba při načítání JSON: {e}")
+            raise ConfigError(f"Error loading JSON: {e}")
 
     def validate_config(self):
         required_keys = {
@@ -27,10 +27,10 @@ class Config:
 
         for section, keys in required_keys.items():
             if section not in self.config:
-                raise ConfigError(f"Chybí sekce '{section}' v konfiguraci.")
+                raise ConfigError(f"No section: '{section}' in config.")
             for key in keys:
                 if key not in self.config[section]:
-                    raise ConfigError(f"Chybí klíč '{key}' v sekci '{section}'.")
+                    raise ConfigError(f"No key: '{key}' in section '{section}'.")
 
     def get_database_uri(self):
         db = self.config["db"]
@@ -47,4 +47,4 @@ try:
     DB_PASSWORD = config.config["db"]["password"]
     DB_NAME = config.config["db"]["name"]
 except ConfigError as e:
-    print(f"Chyba v konfiguraci: {e}")
+    print(f"Error in config: {e}")

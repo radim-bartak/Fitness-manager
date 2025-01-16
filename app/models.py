@@ -54,7 +54,7 @@ class Class(db.Model):
     name = db.Column(db.String(50), nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
-    canceled = db.Column(db.Boolean, default=False, nullable=False)
+    canceled = db.Column(db.Boolean, default=False)
 
     trainer = db.relationship('Trainer', back_populates='classes')
     reservations = db.relationship('Reservation', back_populates='class_info', cascade='all, delete-orphan')

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+<div class=" container">
+    <h2>Classes</h2>
+    {% if classes|length < 1%}
+    <p>No classes yet</p>
+    {% else %}
+    <table>
+        <tr>
+            <th>Trainer</th>
+            <th>Name</th>
+            <th>Capacity</th>
+            <th>Start Time</th>
+            <th>Action</th>
+        </tr>
+        {% for class in classes %}
+        <tr>
+            <td>{{ class.trainer.name }}</td>
+            <td>{{ class.name }}</td>
+            <td>{{ class.capacity }}</td>
+            <td>{{ class.start_time }}</td>
+            <td><a href="/classes/update/{{ class.id }}">Edit</a><br>
+            <a href="/classes/delete/{{ class.id }}">Cancel</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <h2>Add class</h2>
+    <form action="/classes" method="POST">
+        <label for="class_name">Name:</label>
+        <input type="text" id="class_name" name="class_name" required>
+
+        <label for="class_trainer_id">Trenér:</label>
+        <select id="class_trainer_id" name="class_trainer_id" required>
+            <option value="" disabled selected>Choose a trainer</option>
+            {% for trainer in trainers %}
+            <option value="{{ trainer.id }}">{{ trainer.name }} ({{ trainer.specialization }})</option>
+            {% endfor %}
+        </select>
+
+        <label for="class_capacity">Capacity:</label>
+        <input type="number" id="class_capacity" name="class_capacity" required>
+
+        <label for="class_start_time">Start time:</label>
+        <input type="datetime-local" id="class_start_time" name="class_start_time" required>
+
+        <button type="submit">Add class</button>
+    </form>
+</div>
+{% endblock %}

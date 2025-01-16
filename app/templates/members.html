@@ -5,9 +5,6 @@
 {% endblock %}
 
 {% block body %}
-<header>
-    <h1>Fitness manager</h1>
-</header>
 <div class=" container">
     <h2>Members</h2>
     {% if members|length < 1%}
@@ -19,24 +16,30 @@
             <th>Phone</th>
             <th>Email</th>
             <th>Membership</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Action</th>
         </tr>
         {% for member in members %}
         <tr>
             <td>{{ member.name }}</td>
             <td>{{ member.phone }}</td>
             <td>{{ member.email }}</td>
-            <td>{{ member.active_membership }}</td>
-            <td><a href="/update/{{ member.id }}">Edit</a></td>
-            <td><a href="/delete/{{ member.id }}">Delete</a></td>
+            <td>
+            {% if member.active_membership %}
+                Active (Valid until: {{ member.memberships[-1].valid_to.strftime('%Y-%m-%d') }})
+            {% else %}
+                Not active
+            {% endif %}
+            </td>
+            <td><a href="/members/update/{{ member.id }}">Edit</a>
+            <a href="/members/delete/{{ member.id }}">Delete</a>
+            <a href="/members/payment/{{ member.id }}">New Payment</a></td>
         </tr>
         {% endfor %}
     </table>
     {% endif %}
 
-    <h2>New member</h2>
-    <form action="/" method="POST">
+    <h2>Add member</h2>
+    <form action="/members" method="POST">
         <label for="member_name">Name:</label>
         <input type="text" name="member_name" id="member_name">
         <label for="member_phone">Phone:</label>
@@ -45,5 +48,5 @@
         <input type="email" name="member_email" id="member_email">
         <input type="submit" value="Submit">
     </form>
-</div>
+
 {% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+<div class=" container">
+    <h2>Trainers</h2>
+    {% if trainers|length < 1%}
+    <p>No trainers yet</p>
+    {% else %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Specialization</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for trainer in trainers %}
+        <tr>
+            <td>{{ trainer.name }}</td>
+            <td>{{ trainer.specialization }}</td>
+            <td>{{ trainer.phone }}</td>
+            <td>{{ trainer.email }}</td>
+            <td><a href="/trainers/update/{{ trainer.id }}">Edit</a></td>
+            <td><a href="/trainers/delete/{{ trainer.id }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <h2>Add trainer</h2>
+    <form action="/trainers" method="POST">
+        <label for="trainer_name">Name:</label>
+        <input type="text" name="trainer_name" id="trainer_name">
+        <label for="trainer_specialization">Specialization:</label>
+        <input type="text" name="trainer_specialization" id="trainer_specialization">
+        <label for="trainer_phone">Phone:</label>
+        <input type="text" name="trainer_phone" id="trainer_phone">
+        <label for="trainer_email">Email:</label>
+        <input type="email" name="trainer_email" id="trainer_email">
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock %}

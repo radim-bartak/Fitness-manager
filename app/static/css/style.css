@@ -5,6 +5,22 @@ body {
     background-color: #f4f4f4;
 }
 
+nav {
+    padding: 10px 0;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+    margin-right: 10px;
+}
+
 header {
     background-color: #333;
     color: #fff;
@@ -23,11 +39,17 @@ h2 {
     padding: 30px 0 10px 0;
 }
 
-table {
+table{
     width: 80%;
     margin: 20px auto;
     border-collapse: collapse;
     background-color: #fff;
+}
+
+form{
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
 }
 
 th, td {
