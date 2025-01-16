@@ -13,9 +13,12 @@ def process_payment(member_id, amount, payment_method, membership_type):
     """
     now = datetime.utcnow()
 
+    if amount <= 0:
+        raise ValueError(f"Invalid amount: {amount}")
+
     member = Member.query.get(member_id)
     if not member:
-        raise ValueError(f"Člen s ID {member_id} neexistuje.")
+        raise ValueError(f"Member does not exist.")
 
     valid_from = datetime.utcnow()
     if membership_type == 'Monthly':
@@ -25,7 +28,13 @@ def process_payment(member_id, amount, payment_method, membership_type):
     elif membership_type == 'Yearly':
         valid_to = valid_from + timedelta(days=365)
     else:
-        raise ValueError(f"Neplatný typ členství: {membership_type}")
+        raise ValueError(f"Invalid type of membership: {membership_type}")
+    
+    existing_memberships = Membership.query.filter_by(member_id=member_id).all()
+    if existing_memberships:
+        for existing_membership in existing_memberships:
+            if existing_membership.valid_to > now:
+                raise ValueError(f"Member already has an active membership.")
 
     membership = Membership(
         member_id=member_id,
@@ -35,6 +44,7 @@ def process_payment(member_id, amount, payment_method, membership_type):
         valid_to=valid_to
     )
     db.session.add(membership)
+    db.session.flush()
     
     payment = Payment(
         member_id=member_id,
@@ -47,4 +57,4 @@ def process_payment(member_id, amount, payment_method, membership_type):
     member.active_membership = True
 
     db.session.commit()
-    return f"Platba ve výši {amount} byla úspěšně zpracována a členství bylo vytvořeno."
+    return f"Payment in the amount {amount} was successful. {member.name} now has a {membership_type} membership."

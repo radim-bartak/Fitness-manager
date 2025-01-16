@@ -23,7 +23,17 @@ def index():
             return f"There was an issue adding the trainer: {str(e)}"
 
     else:
-        trainers = Trainer.query.order_by(Trainer.name).all()
+        search_name = request.args.get("search_name")
+        search_email = request.args.get("search_email")
+        search_phone = request.args.get("search_phone")
+        if search_name:
+            trainers = Trainer.query.filter(Trainer.name.ilike(f"%{search_name}%")).order_by(Trainer.name).all()
+        elif search_email:
+            trainers = Trainer.query.filter(Trainer.email.ilike(f"%{search_email}%")).order_by(Trainer.name).all()
+        elif search_phone:
+            trainers = Trainer.query.filter(Trainer.phone.ilike(f"%{search_phone}%")).order_by(Trainer.name).all()
+        else:
+            trainers = Trainer.query.order_by(Trainer.name).all()
         return render_template("trainers.html", trainers=trainers)
 
 @trainers_bp.route("trainers/delete/<int:id>")

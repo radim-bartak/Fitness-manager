@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, render_template
 from app.models import db
 from app.routes.members import members_bp
 from app.routes.trainers import trainers_bp
 from app.routes.classes import classes_bp
+from app.routes.reservation import reservation_bp
 from app.config import Config, ConfigError
 
 def create_app():
@@ -21,6 +22,7 @@ def create_app():
     app.register_blueprint(members_bp, url_prefix='/')
     app.register_blueprint(trainers_bp, url_prefix='/')
     app.register_blueprint(classes_bp, url_prefix='/')
+    app.register_blueprint(reservation_bp, url_prefix='/')
 
     with app.app_context():
         db.create_all()

@@ -6,31 +6,6 @@
 
 {% block body %}
 <div class=" container">
-    <h2>Trainers</h2>
-    {% if trainers|length < 1%}
-    <p>No trainers yet</p>
-    {% else %}
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Specialization</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        {% for trainer in trainers %}
-        <tr>
-            <td>{{ trainer.name }}</td>
-            <td>{{ trainer.specialization }}</td>
-            <td>{{ trainer.phone }}</td>
-            <td>{{ trainer.email }}</td>
-            <td><a href="/trainers/update/{{ trainer.id }}">Edit</a></td>
-            <td><a href="/trainers/delete/{{ trainer.id }}">Delete</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
 
     <h2>Add trainer</h2>
     <form action="/trainers" method="POST">
@@ -44,5 +19,43 @@
         <input type="email" name="trainer_email" id="trainer_email">
         <input type="submit" value="Submit">
     </form>
+
+    <h2>Search Trainers</h2>
+    <form action="/trainers" method="GET">
+        <label for="search_name">by Name:</label>
+        <input type="text" name="search_name" id="search_name">
+        <label for="search_email">by Email:</label>
+        <input type="text" name="search_email" id="search_email">
+        <label for="search_phone">by Phone:</label>
+        <input type="text" name="search_phone" id="search_phone">
+        <input type="submit" value="Search" class="button">
+        <a href="/trainers" class="button">Clear</a>
+    </form>
+
+    <h2>Trainers</h2>
+    {% if trainers|length < 1%}
+    <p>No trainers yet</p>
+    {% else %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Specialization</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        {% for trainer in trainers %}
+        <tr>
+            <td>{{ trainer.name }}</td>
+            <td>{{ trainer.specialization }}</td>
+            <td>{{ trainer.phone }}</td>
+            <td>{{ trainer.email }}</td>
+            <td><a href="/trainers/update/{{ trainer.id }}" class="button">Edit</a><br>
+            <a href="/trainers/delete/{{ trainer.id }}" class="button">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
 </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-
+    Member Payment
 {% endblock %}
 
 {% block body %}
@@ -13,7 +13,7 @@
 
         <label for="payment_method">Payment Method:</label>
         <select id="payment_method" name="payment_method" required>
-            <option value="" disabled selected>Choose a payment method</option>
+            <option value="" disabled selected>Choose method</option>
             <option value="Cash">Cash</option>
             <option value="Card">Card</option>
             <option value="Online">Online</option>
@@ -21,7 +21,7 @@
 
         <label for="membership_type">Membership Type:</label>
         <select id="membership_type" name="membership_type" required>
-            <option value="" disabled selected>Choose a membership type</option>
+            <option value="" disabled selected>Choose type</option>
             <option value="Monthly">Monthly</option>
             <option value="Three-month">Three-month</option>
             <option value="Yearly">Yearly</option>
@@ -29,5 +29,27 @@
 
         <button type="submit">Process Payment</button>
     </form>
+
+    <h2>{{ member.name }} - Payment history</h2>
+    {% if payments|length < 1 %}
+        <p>No payments yet</p>
+    {% else %}
+        <table>
+            <tr>
+                <th>Amount</th>
+                <th>Payment Method</th>
+                <th>Membership Type</th>
+                <th>Payment Date</th>
+            </tr>
+            {% for payment in payments %}
+            <tr>
+                <td>{{ payment.total_price }}</td>
+                <td>{{ payment.payment_method }}</td>
+                <td>{{ payment.membership.type }}</td>
+                <td>{{ payment.payment_date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 </div>
 {% endblock %}

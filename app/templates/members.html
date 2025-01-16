@@ -1,11 +1,35 @@
 {% extends "base.html" %}
 
 {% block title %}
-
+    Members
 {% endblock %}
 
 {% block body %}
 <div class=" container">
+
+    <h2>Add a Member</h2>
+    <form action="/members" method="POST">
+        <label for="member_name">Name:</label>
+        <input type="text" name="member_name" id="member_name">
+        <label for="member_phone">Phone:</label>
+        <input type="text" name="member_phone" id="member_phone">
+        <label for="member_email">Email:</label>
+        <input type="email" name="member_email" id="member_email">
+        <input type="submit" value="Submit" class="button">
+    </form>
+
+    <h2>Search Members</h2>
+    <form action="/members" method="GET">
+        <label for="search_name">by Name:</label>
+        <input type="text" name="search_name" id="search_name">
+        <label for="search_email">by Email:</label>
+        <input type="text" name="search_email" id="search_email">
+        <label for="search_phone">by Phone:</label>
+        <input type="text" name="search_phone" id="search_phone">
+        <input type="submit" value="Search" class="button">
+        <a href="/members" class="button">Clear</a>
+    </form>
+    
     <h2>Members</h2>
     {% if members|length < 1%}
     <p>No members yet</p>
@@ -24,29 +48,23 @@
             <td>{{ member.phone }}</td>
             <td>{{ member.email }}</td>
             <td>
-            {% if member.active_membership %}
-                Active (Valid until: {{ member.memberships[-1].valid_to.strftime('%Y-%m-%d') }})
+                {% if member.active_membership %}
+                <span class="active-status">Active (Valid until: {{ member.memberships[-1].valid_to.strftime('%Y-%m-%d') }})</span>
             {% else %}
-                Not active
+                <span class="inactive-status">Not active</span>
             {% endif %}
             </td>
-            <td><a href="/members/update/{{ member.id }}">Edit</a>
-            <a href="/members/delete/{{ member.id }}">Delete</a>
-            <a href="/members/payment/{{ member.id }}">New Payment</a></td>
+            <td><a href="/members/update/{{ member.id }}" class="button">Edit</a><br>
+            <a href="/members/delete/{{ member.id }}" class="button">Delete</a><br>
+            <a href="/members/payment/{{ member.id }}" class="button">Payments</a>
+            {% if member.active_membership %}
+                <br>
+                <a href="/reservation/{{ member.id }}" class="button">Reservations</a>
+            {% else %}{% endif %}
+        </td>
         </tr>
         {% endfor %}
     </table>
     {% endif %}
-
-    <h2>Add member</h2>
-    <form action="/members" method="POST">
-        <label for="member_name">Name:</label>
-        <input type="text" name="member_name" id="member_name">
-        <label for="member_phone">Phone:</label>
-        <input type="text" name="member_phone" id="member_phone">
-        <label for="member_email">Email:</label>
-        <input type="email" name="member_email" id="member_email">
-        <input type="submit" value="Submit">
-    </form>
-
+</div>
 {% endblock %}

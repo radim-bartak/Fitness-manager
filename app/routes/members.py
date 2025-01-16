@@ -1,7 +1,8 @@
 from flask import Blueprint, request, render_template, redirect
-from app.models import db, Member, Payment
+from app.models import db, Member, Class, Payment
 from app.services.payment_service import process_payment
-from datetime import datetime
+from app.services.reservation_sevice import reserve_class
+from datetime import datetime, timezone
 
 members_bp = Blueprint('members', __name__)
 
@@ -23,7 +24,17 @@ def index():
             return f"There was an issue adding the member: {str(e)}"
 
     else:
-        members = Member.query.order_by(Member.registration_date).all()
+        search_name = request.args.get("search_name")
+        search_email = request.args.get("search_email")
+        search_phone = request.args.get("search_phone")
+        if search_name:
+            members = Member.query.filter(Member.name.ilike(f"%{search_name}%")).order_by(Member.registration_date).all()
+        elif search_email:
+            members = Member.query.filter(Member.email.ilike(f"%{search_email}%")).order_by(Member.registration_date).all()
+        elif search_phone:
+            members = Member.query.filter(Member.phone.ilike(f"%{search_phone}%")).order_by(Member.registration_date).all()
+        else:
+            members = Member.query.order_by(Member.registration_date).all()
         return render_template("members.html", members=members)
 
 @members_bp.route("/members/delete/<int:id>")
@@ -72,4 +83,5 @@ def payment(id):
             db.session.rollback()
             return f"There was an issue processing the payment: {str(e)}"
     else:
-        return render_template("payment.html", member=member)
+        payments = Payment.query.filter(Payment.member_id == id).all()
+        return render_template("payment.html", member=member, payments=payments)

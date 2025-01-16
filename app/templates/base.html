@@ -4,20 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    {% block head %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
     <header>
       <h1>Fitness manager</h1>
     </header>
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/members">Members</a></li>
-        <li><a href="/trainers">Trainers</a></li>
-        <li><a href="/classes">Classes</a></li>
-      </ul>
-    </nav>
+    <div class="navigation">
+      <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/members">Members</a></li>
+            <li><a href="/trainers">Trainers</a></li>
+            <li><a href="/classes">Classes</a></li>
+          </ul>
+      </nav>
+    </div>
+    
     {% block body %}{% endblock %}
   </body>
 </html>

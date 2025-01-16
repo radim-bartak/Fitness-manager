@@ -11,6 +11,10 @@ def index():
         class_name = request.form["class_name"]
         class_capacity = request.form["class_capacity"]
         class_start_time = request.form["class_start_time"]
+
+        """
+        pridat kontrolu na cas a kapacitu do services
+        """
         
         new_class = Class(trainer_id=class_trainer_id, name=class_name, capacity=class_capacity, start_time=class_start_time)
 
