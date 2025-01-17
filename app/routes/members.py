@@ -12,6 +12,9 @@ def index():
         member_name = request.form["member_name"]
         member_phone = request.form["member_phone"]
         member_email = request.form["member_email"]
+
+        if Member.query.filter_by(email=member_email).first():
+            raise ValueError(f"Member with email {member_email} already exists.")
         
         new_member = Member(name=member_name, phone=member_phone, email=member_email)
 
@@ -56,6 +59,9 @@ def update(id):
         member_to_update.name = request.form["member_name"]
         member_to_update.phone = request.form["member_phone"]
         member_to_update.email = request.form["member_email"]
+
+        if Member.query.filter(Member.email == member_to_update.email, Member.id != member_to_update.id).first():
+            raise ValueError(f"Member with email {member_to_update.email} already exists.")
 
         try:
             db.session.commit()

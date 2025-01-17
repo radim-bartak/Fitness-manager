@@ -11,6 +11,9 @@ def index():
         trainer_specialization = request.form["trainer_specialization"]
         trainer_phone = request.form["trainer_phone"]
         trainer_email = request.form["trainer_email"]
+
+        if Trainer.query.filter_by(email=trainer_email).first():
+            raise ValueError(f"Trainer with email {trainer_email} already exists.")
         
         new_trainer = Trainer(name=trainer_name, specialization=trainer_specialization, phone=trainer_phone, email=trainer_email)
 
@@ -56,6 +59,9 @@ def update(id):
         trainer_to_update.specialization = request.form["trainer_specialization"]
         trainer_to_update.phone = request.form["trainer_phone"]
         trainer_to_update.email = request.form["trainer_email"]
+
+        if Trainer.query.filter(Trainer.email == trainer_to_update.email, Trainer.id != trainer_to_update.id).first():
+            raise ValueError(f"Trainer with email {trainer_to_update.email} already exists.")
 
         try:
             db.session.commit()
