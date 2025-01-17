@@ -18,6 +18,13 @@
         <input type="submit" value="Submit" class="button">
     </form>
 
+    <h2>Import Members from CSV</h2>
+    <form action="/members/import" method="POST" enctype="multipart/form-data">
+        <label for="csv_file">CSV File:</label>
+        <input type="file" name="csv_file" id="csv_file" accept=".csv" required>
+        <input type="submit" value="Import" class="button">
+    </form>
+
     <h2>Search Members</h2>
     <form action="/members" method="GET">
         <label for="search_name">by Name:</label>
@@ -27,7 +34,7 @@
         <label for="search_phone">by Phone:</label>
         <input type="text" name="search_phone" id="search_phone">
         <input type="submit" value="Search" class="button">
-        <a href="/members" class="button">Clear</a>
+        <a href="/members" class="clear-button">Clear</a>
     </form>
     
     <h2>Members</h2>

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect
+from flask import Blueprint, request, render_template, redirect, flash
 from app.models import db, Class, Trainer
 from datetime import datetime
 
@@ -6,15 +6,23 @@ classes_bp = Blueprint('classes', __name__)
 
 @classes_bp.route("/classes", methods=["POST", "GET"])
 def index():
+    """
+    Vytváří stránku lekcí a zpracovává vytváření nových lekcí.
+    """
     if request.method == "POST":
         class_trainer_id = request.form["class_trainer_id"]
         class_name = request.form["class_name"]
         class_capacity = request.form["class_capacity"]
         class_start_time = request.form["class_start_time"]
 
-        """
-        pridat kontrolu na cas a kapacitu do services
-        """
+        if int(class_capacity) <= 0:
+            flash('Class capacity must be a positive number.')
+            return redirect("/classes")
+
+        start_time = datetime.strptime(class_start_time, '%Y-%m-%dT%H:%M')
+        if start_time <= datetime.now():
+            flash('Class start time must be in the future.')
+            return redirect("/classes")
         
         new_class = Class(trainer_id=class_trainer_id, name=class_name, capacity=class_capacity, start_time=class_start_time)
 
@@ -33,6 +41,9 @@ def index():
     
 @classes_bp.route("classes/delete/<int:id>")
 def delete_class(id):
+    """
+    Odstraní lekci z databáze.
+    """
     class_to_delete = Class.query.get_or_404(id)
 
     try:
@@ -44,6 +55,9 @@ def delete_class(id):
     
 @classes_bp.route("classes/update/<int:id>", methods=["POST", "GET"])
 def update(id):
+    """
+    Upraví lekci v databázi.
+    """
     class_to_update = Class.query.get_or_404(id)
     trainers = Trainer.query.order_by(Trainer.name).all()
 
@@ -52,6 +66,15 @@ def update(id):
         class_to_update.name = request.form["class_name"]
         class_to_update.capacity = request.form["class_capacity"]
         class_to_update.start_time = request.form["class_start_time"]
+
+        if int(class_to_update.capacity) <= 0:
+            flash('Class capacity must be a positive number.')
+            return redirect("/classes")
+        
+        start_time = datetime.strptime(class_to_update.start_time, '%Y-%m-%dT%H:%M')
+        if start_time <= datetime.now():
+            flash('Class start time must be in the future.')
+            return redirect("/classes")
 
         try:
             db.session.commit()

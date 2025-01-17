@@ -1,3 +1,4 @@
+from flask import flash, redirect
 from app.models import db, Payment, Member, Membership
 from datetime import datetime, timedelta, date
 
@@ -14,11 +15,13 @@ def process_payment(member_id, amount, payment_method, membership_type):
     now = datetime.utcnow()
 
     if amount <= 0:
-        raise ValueError(f"Invalid amount: {amount}")
+        flash(f"Amount must be a positive number.")
+        return redirect(f"/members/payment/{member_id}")
 
     member = Member.query.get(member_id)
     if not member:
-        raise ValueError(f"Member does not exist.")
+        flash(f"Member does not exist.")
+        return redirect(f"/members/payment/{member_id}")
 
     valid_from = datetime.utcnow()
     if membership_type == 'Monthly':
@@ -34,7 +37,8 @@ def process_payment(member_id, amount, payment_method, membership_type):
     if existing_memberships:
         for existing_membership in existing_memberships:
             if existing_membership.valid_to > now:
-                raise ValueError(f"Member already has an active membership.")
+                flash(f"Member already has an active membership.")
+                return redirect(f"/members/payment/{member_id}")
 
     membership = Membership(
         member_id=member_id,

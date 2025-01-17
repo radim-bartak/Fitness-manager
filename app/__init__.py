@@ -9,6 +9,8 @@ from app.config import Config, ConfigError
 def create_app():
     app = Flask(__name__)
 
+    app.secret_key = "69170a972967d8eb0413676335b504ee"
+
     try:
         config = Config("config.json")
         app.config["SQLALCHEMY_DATABASE_URI"] = config.get_database_uri()
@@ -23,6 +25,10 @@ def create_app():
     app.register_blueprint(trainers_bp, url_prefix='/')
     app.register_blueprint(classes_bp, url_prefix='/')
     app.register_blueprint(reservation_bp, url_prefix='/')
+
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
     with app.app_context():
         db.create_all()

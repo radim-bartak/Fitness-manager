@@ -8,7 +8,7 @@
   </head>
   <body>
     <header>
-      <h1>Fitness manager</h1>
+      <h1>Fitness Manager</h1>
     </header>
     <div class="navigation">
       <nav>
@@ -20,7 +20,15 @@
           </ul>
       </nav>
     </div>
-    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     {% block body %}{% endblock %}
   </body>
 </html>

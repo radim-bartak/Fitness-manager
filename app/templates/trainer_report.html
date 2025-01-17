@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Trainer Report
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>Trainer workload overview</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Specialization</th>
+                <th>Number of classes</th>
+                <th>Total class occupancy</th>
+                <th>Free class spots</th>
+                <th>Average occupancy (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trainer in report_data %}
+            <tr>    
+                <td>{{ trainer.trainer_name }}</td>
+                <td>{{ trainer.specialization }}</td>
+                <td>{{ trainer.total_classes }}</td>
+                <td>{{ trainer.total_reservations }}</td>
+                <td>{{ trainer.total_free_spots }}</td>
+                <td>{{ trainer.average_utilization }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="report-buttons">
+        <a href="/trainers/report/export" class="button">Export to CSV</a><br>
+        <a href="/trainers" class="button">Back to trainers</a>
+    </div>
+    
+</div>
+{% endblock %}
