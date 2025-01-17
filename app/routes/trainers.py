@@ -64,4 +64,4 @@ def update(id):
             db.session.rollback()
             return f"There was an issue updating the trainer: {str(e)}"
     else:
-        return render_template("update.html", trainer=trainer_to_update)
+        return render_template("update_trainer.html", trainer=trainer_to_update)

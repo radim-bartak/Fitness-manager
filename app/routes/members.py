@@ -64,7 +64,7 @@ def update(id):
             db.session.rollback()
             return f"There was an issue updating the member: {str(e)}"
     else:
-        return render_template("update.html", member=member_to_update)
+        return render_template("update_member.html", member=member_to_update)
     
 @members_bp.route("/members/payment/<int:id>", methods=["POST", "GET"])
 def payment(id):

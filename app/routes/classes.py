@@ -41,3 +41,23 @@ def delete_class(id):
         return redirect("/classes")
     except Exception as e:
         return f"There was a problem deleting the class: {str(e)}"
+    
+@classes_bp.route("classes/update/<int:id>", methods=["POST", "GET"])
+def update(id):
+    class_to_update = Class.query.get_or_404(id)
+    trainers = Trainer.query.order_by(Trainer.name).all()
+
+    if request.method == "POST":
+        class_to_update.trainer_id = request.form["class_trainer_id"]
+        class_to_update.name = request.form["class_name"]
+        class_to_update.capacity = request.form["class_capacity"]
+        class_to_update.start_time = request.form["class_start_time"]
+
+        try:
+            db.session.commit()
+            return redirect("/classes")
+        except Exception as e:
+            db.session.rollback()
+            return f"There was an issue updating the class: {str(e)}"
+
+    return render_template("update_class.html", class_to_update=class_to_update, trainers=trainers)

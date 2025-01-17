@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Update trainers
+{% endblock %}
+
+{% block body %}
+<div class=" container">    
+    <h2>Edit trainer</h2>
+    <form action="" method="POST">
+        <label for="trainer_name">Name:</label>
+        <input type="text" name="trainer_name" id="trainer_name" value="{{trainer.name}}" required>
+        <label for="trainer_specialization">Specialization:</label>
+        <input type="text" name="trainer_specialization" id="trainer_specialization" value="{{trainer.specialization}}" required>
+        <label for="trainer_phone">Phone:</label>
+        <input type="text" name="trainer_phone" id="trainer_phone" value="{{trainer.phone}}" required>
+        <label for="trainer_email">Email:</label>
+        <input type="email" name="trainer_email" id="trainer_email" value="{{trainer.email}}" required>
+        <button type="submit" value="Submit" class="button">Update</button>
+    </form>
+</div>
+{% endblock %}

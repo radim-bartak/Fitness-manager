@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-
+    Trainers
 {% endblock %}
 
 {% block body %}
@@ -10,14 +10,14 @@
     <h2>Add trainer</h2>
     <form action="/trainers" method="POST">
         <label for="trainer_name">Name:</label>
-        <input type="text" name="trainer_name" id="trainer_name">
+        <input type="text" name="trainer_name" id="trainer_name" required>
         <label for="trainer_specialization">Specialization:</label>
-        <input type="text" name="trainer_specialization" id="trainer_specialization">
+        <input type="text" name="trainer_specialization" id="trainer_specialization" required>
         <label for="trainer_phone">Phone:</label>
-        <input type="text" name="trainer_phone" id="trainer_phone">
+        <input type="text" name="trainer_phone" id="trainer_phone" required>
         <label for="trainer_email">Email:</label>
-        <input type="email" name="trainer_email" id="trainer_email">
-        <input type="submit" value="Submit">
+        <input type="email" name="trainer_email" id="trainer_email" required>
+        <input type="submit" value="Submit" class="button">
     </form>
 
     <h2>Search Trainers</h2>

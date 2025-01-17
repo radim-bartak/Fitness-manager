@@ -10,11 +10,11 @@
     <h2>Add a Member</h2>
     <form action="/members" method="POST">
         <label for="member_name">Name:</label>
-        <input type="text" name="member_name" id="member_name">
+        <input type="text" name="member_name" id="member_name" required>
         <label for="member_phone">Phone:</label>
-        <input type="text" name="member_phone" id="member_phone">
+        <input type="text" name="member_phone" id="member_phone" required>
         <label for="member_email">Email:</label>
-        <input type="email" name="member_email" id="member_email">
+        <input type="email" name="member_email" id="member_email" required>
         <input type="submit" value="Submit" class="button">
     </form>
 
