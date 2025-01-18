@@ -85,3 +85,22 @@ class Payment(db.Model):
     member = db.relationship('Member', back_populates='payments')
     membership = db.relationship('Membership', back_populates='payments')
 
+class ActiveMembersView(db.Model):
+    __tablename__ = "active_members_view"
+    __table_args__ = {'extend_existing': True}
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    membership_type = db.Column(db.String(50))
+    valid_to = db.Column(db.DateTime)
+
+class TrainerUtilizationView(db.Model):
+    __tablename__ = "trainer_utilization_view"
+    __table_args__ = {'extend_existing': True}
+
+    trainer_id = db.Column(db.Integer, primary_key=True)
+    trainer_name = db.Column(db.String(50))
+    specialization = db.Column(db.String(50))
+    total_classes = db.Column(db.Integer)
+    average_utilization = db.Column(db.Float)
