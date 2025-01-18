@@ -2,7 +2,7 @@
 
 Fitness Manager je webová aplikace určená pro správu fitness centra. Umožňuje efektivní řízení členů, trenérů, lekcí, rezervací, členství a plateb.
 
-## Funkcionality
+## Hlavní funkce
 - Správa členů: Přidávání, úprava a mazání informací o členech.
 - Správa trenérů: Správa profilů trenérů a jejich specializací.
 - Plánování lekcí: Vytváření a správa lekcí včetně kapacity a času konání.
