@@ -20,9 +20,9 @@ Fitness Manager je webová aplikace určená pro správu fitness centra. Umožň
 1. Otevřete XAMPP a nastartujte v něm MySQL modul.
 2. Otevřete MySQL Workbench, přihlaste se jako root a spusťtě následující script:
    
-  `CREATE DATABASE fitness_manager;
-    CREATE USER 'fitness_user'@'localhost' IDENTIFIED BY 'fitness';
-    GRANT ALL PRIVILEGES ON fitness_manager.* TO 'fitness_user'@'localhost';
+  `CREATE DATABASE fitnessdb;
+    CREATE USER 'fitnessuser'@'localhost' IDENTIFIED BY 'fitness';
+    GRANT ALL PRIVILEGES ON fitnessdb.* TO 'fitnessuser'@'localhost';
     FLUSH PRIVILEGES;`
     
 3. V příkazovém řádku přejděte do složky s projektem a pomocí následujících příkazů vytvořte virtuální prostředí:
@@ -43,14 +43,19 @@ Aplikaci otevřete ve webovém prohlížeči na adrese: http://127.0.0.1:5000/.
 
 ## Struktura projektu
 - app/: Obsahuje hlavní kód aplikace.
-  - init.py: Inicializace aplikace Flask.  
-  - models.py: Definice databázových modelů.
-  - config.py: Konfigurační logika.
+	- init.py: Inicializace aplikace Flask.  
+	- models.py: Definice databázových modelů.
+	- config.py: Konfigurační logika.
 	- routes/: Definice aplikačních rout.
-  - services/: Logika pro objekty.
+	- services/: Logika pro objekty.
 	- templates/: HTML šablony a stránky.
 	- static/: CSS.
 - tests/: Test casy aplikace.
 - config.json: Konfigurační soubor.
 - requirements.txt: Závislosti projektu.
 - run.py: Spouštěcí soubor aplikace.
+
+## Použité knihovny
+- Flask
+- SQLAlchemy, Author: Mike Bayer
+- PyMySQL, Author: Inada Naoki
