@@ -21,7 +21,7 @@ Fitness Manager je webová aplikace určená pro správu fitness centra. Umožň
 2. Otevřete MySQL Workbench, přihlaste se jako root a spusťtě následující script:
    
   `CREATE DATABASE fitness_manager;
-    CREATE USER 'fitness_user'@'localhost' IDENTIFIED BY 'strong_password';
+    CREATE USER 'fitness_user'@'localhost' IDENTIFIED BY 'fitness';
     GRANT ALL PRIVILEGES ON fitness_manager.* TO 'fitness_user'@'localhost';
     FLUSH PRIVILEGES;`
     
