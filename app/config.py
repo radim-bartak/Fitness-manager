@@ -23,6 +23,7 @@ class Config:
     def validate_config(self):
         required_keys = {
             "db": ["host", "user", "password", "name"],
+            "app_settings": ["debug", "secret_key"]
         }
 
         for section, keys in required_keys.items():
@@ -46,5 +47,7 @@ try:
     DB_USER = config.config["db"]["user"]
     DB_PASSWORD = config.config["db"]["password"]
     DB_NAME = config.config["db"]["name"]
+    DEBUG = config.config["app_settings"]["debug"]
+    SECRET_KEY = config.config["app_settings"]["secret_key"]
 except ConfigError as e:
     print(f"Error in config: {e}")

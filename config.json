@@ -4,5 +4,9 @@
         "user": "fitnessuser",
         "password": "fitness",
         "name": "fitnessdb"
+    },
+    "app_settings": {
+        "debug": false,
+        "secret_key": "69170a972967d8eb0413676335b504ee"
     }
 }

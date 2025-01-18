@@ -146,7 +146,8 @@ def payment(id):
             return render_template('payment_success.html', message=message)
         except Exception as e:
             db.session.rollback()
-            return f"There was an issue processing the payment: {str(e)}"
+            flash(f"There was an issue processing the payment: {str(e)}")
+            return redirect(f"/members")
     else:
         payments = Payment.query.filter(Payment.member_id == id).all()
         return render_template("payment.html", member=member, payments=payments)

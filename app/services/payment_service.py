@@ -15,8 +15,7 @@ def process_payment(member_id, amount, payment_method, membership_type):
     now = datetime.utcnow()
 
     if amount <= 0:
-        flash(f"Amount must be a positive number.")
-        return redirect(f"/members/payment/{member_id}")
+        raise ValueError("The amount has to be positive.")
 
     member = Member.query.get(member_id)
     if not member:

@@ -4,17 +4,17 @@ from app.routes.members import members_bp
 from app.routes.trainers import trainers_bp
 from app.routes.classes import classes_bp
 from app.routes.reservation import reservation_bp
-from app.config import Config, ConfigError
+from app.config import *
 
 def create_app():
     app = Flask(__name__)
-
-    app.secret_key = "69170a972967d8eb0413676335b504ee"
 
     try:
         config = Config("config.json")
         app.config["SQLALCHEMY_DATABASE_URI"] = config.get_database_uri()
         app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        app.config["DEBUG"] = DEBUG
+        app.secret_key = SECRET_KEY
     except ConfigError as e:
         print(f"Configuration error: {e}")
         exit(1)
